@@ -118,7 +118,7 @@ module.exports = function(grunt) {
             }
 
             // Log unpacking
-            grunt.verbose.writeln('Unpacking ' + entry.getName() + ' --> ' + fileName);
+            grunt.log.writeln('Unpacking ' + entry.getName() + ' --> ' + fileName);
 
             if (entry.isDirectory()) {
                 grunt.file.mkdir(fileName, function(err) {
@@ -145,7 +145,7 @@ module.exports = function(grunt) {
     exports.untarFile = function(file, dest) {
         var untarDone = Q.defer();
 
-        grunt.log.writeln('Unpacking: ' + file);
+        grunt.log.writeln('Untarring: ' + file);
       
         fs.createReadStream(file)
             .pipe(zlib.createGunzip())
@@ -159,7 +159,7 @@ module.exports = function(grunt) {
             .on('end', untarDone.resolve)
             .on("entry", function(entry) {
                 var filename = entry.path.split('/').reverse()[0];
-                grunt.verbose.writeln('Unpacking ' + filename + ' --> ' + path.resolve(dest, filename));
+                grunt.log.writeln('Unpacking ' + filename + ' --> ' + path.resolve(dest, filename));
             });
 
         return untarDone.promise;
